@@ -20,6 +20,7 @@ def convert_score(lst):
         else:
             pass
     return scores_id
-        
+
+
 if __name__ == "__main__":
     convert_score(lst)

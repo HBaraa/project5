@@ -5,8 +5,6 @@ import mysql.connector
 from mysql.connector import Error
 
 
-
-
 def connect_db(USER, PASSWORD, HOST, DATABASE_NAME):
     connection = None
     try:
@@ -19,7 +17,7 @@ def connect_db(USER, PASSWORD, HOST, DATABASE_NAME):
     except Error as e:
         print(f"The error '{e}' occurred")
         pass
-    
+
     return connexion
 
 if __name__ == "__main__":
