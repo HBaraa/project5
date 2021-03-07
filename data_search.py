@@ -1,5 +1,28 @@
 # -*- coding: utf-8 -*-
 import json
+import requests
+from pprint import pprint
+
+def find_products():
+    
+    datas = requests.get("https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tagtype_1=countries&tag_contains_1=france&page_size=10&json=1.json", )
+    if datas.status_code == 200:
+        print('Success!')
+    elif datas.status_code == 404:
+        print('Not Found.')
+    prods = datas.json()
+    if prods:
+        print("*********____DONE____*******")
+    products = prods['products']
+    print(type(products))
+    #print(products)
+    for product in products:
+       #pprint(product)
+       print(product['product_name_fr'])
+    #print(products['product_name_fr'])
+    #product = prods['args']
+    #print(type(prods['products']))
+    
 
 def find_datas():
     products = []
@@ -61,4 +84,5 @@ def find_datas():
     
     
 if __name__ == "__main__":
-    find_datas()
+    #find_datas()
+    find_products()

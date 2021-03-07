@@ -10,22 +10,21 @@ from scoreTOid import convert_score
 from mysql.connector import Error
 
 def insert_values_category(categories):
-            """Method that inserts predefined
-                categories into the category table"""
+    """Method that inserts predefined categories into the category table"""
 
-            # Inserting our first values into table1
-            try:
-                sql_category_formula = """INSERT INTO Category(name)
+    # Inserting our first values into table1
+    try:
+        sql_category_formula = """INSERT INTO Category(name)
                                             VALUES (%s)"""
-                cursor.executemany(sql_category_formula,
+        cursor.executemany(sql_category_formula,
                                         categories)
                 
-                return True
+        return True
 
-            except :
-                print("""Erreur dans l'insertion des données
+    except :
+        print("""Erreur dans l'insertion des données
                         dans la table category""")
-                return
+        return
 
 
 def fill_Procudcts():
