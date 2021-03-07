@@ -1,5 +1,5 @@
 SET NAMES utf8;
-DROP DATABASE IF EXISTS openfoodfacts;
+DROP DATABASE IF EXISTS openfoodfact;
 CREATE DATABASE openfoodfact;
 USE openfoodfact;
 CREATE TABLE category(
@@ -18,7 +18,7 @@ CREATE TABLE product(
 	nutriscore_id INTEGER NOT NULL,
 	name VARCHAR(400) NOT NULL,   
 	code VARCHAR(100) NOT NULL,
-    description VARCHAR(800) NOT NULL,
+    description VARCHAR(800) ,
     url VARCHAR(400) NOT NULL,
     store VARCHAR(400) NOT NULL,
 	PRIMARY KEY(id)

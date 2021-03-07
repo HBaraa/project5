@@ -2,6 +2,14 @@
 import json
 import requests
 from pprint import pprint
+import mysql.connector
+from mysql.connector import Error
+
+
+from scoreconv import convert_score
+from data_connexion import DATABASE_NAME, HOST, USER, PASSWORD
+from bdd_connexion import connect_db
+
 
 def request_products() -> list:
     
@@ -15,13 +23,64 @@ def request_products() -> list:
         print("*********____DONE____*******")
     products = prods['products']
     print(type(products))
-    #print(products)
-    for product in products:
+    #pprint(products)
+    
        #pprint(product)
-       print(product['product_name_fr'])
+    #   print(product['product_name_fr'])
     #print(products['product_name_fr'])
     #product = prods['args']
     #print(type(prods['products']))
+    return products
+
+def clean_product(product: dict) -> dict:
+    cleaned_product = {}
+    if product["product_name_fr"]:
+        print("product is valid")
+        cleaned_product["prod_name"] = product["product_name_fr"]     
+    else:
+        cleaned_product["prod_name"]= None
+        print("this product isn't valid")
+        pass
+    if product["code"]:
+        print("code is valid")
+        cleaned_product["prod_code"] = product["code"]
+    else:
+        cleaned_product["prod_code"]= None
+        print("this code isn't valid")    
+        pass
+    if (type(product["ingredients_text_fr"])==str and len(product["ingredients_text_fr"]) >= 5 ):
+        print("description is valid")
+        cleaned_product["details"] = product["ingredients_text_fr"]     
+    else:
+        cleaned_product["details"]= None
+        print("this description isn't valid")
+        pass
+    if product["url"]:
+        print("link is valid")
+        cleaned_product["link"] = product["url"]     
+    else:
+        cleaned_product["link"]= None
+        print("this link isn't valid")
+        pass
+    if product["stores"]:
+        print("store is valid")
+        cleaned_product["prod_store"] = product["stores"]     
+    else:
+        cleaned_product["prod_store"]= None
+        print("this store isn't valid")
+        pass
+    if product["nutriscore_grade"]:
+        print("nutriscore is valid")
+        cleaned_product["nutri_score"] = product["nutriscore_grade"]     
+    else:
+        cleaned_product["nutri_score"]= None
+        print("this nutriscore isn't valid")
+        pass   
+    
+    return cleaned_product
+    
+#def insert_product(product):
+
     
 
 def find_datas():
@@ -85,5 +144,19 @@ def find_datas():
     
 if __name__ == "__main__":
     #find_datas()
-    request_products()
+    connexion = connect_db(USER, PASSWORD, HOST, DATABASE_NAME)
+    c = connexion.cursor()
+    products = request_products()
+    for product in products:
+        cleaned_product= clean_product(product)
+        cleaned_product["nutri_score"]=convert_score(cleaned_product["nutri_score"])
+        print(cleaned_product)
+        insert_query =  'INSERT INTO product (nutriscore_id, name, code, description, url, store)  VALUES (%s, %s, %s, %s, %s, %s)'
+        c.execute(insert_query, (cleaned_product["nutri_score"], cleaned_product["prod_name"], cleaned_product["prod_code"], cleaned_product["details"], cleaned_product["link"], cleaned_product["prod_store"]))
+        connexion.commit()
+        #(%s, %s, %s, %s, %s, %s)
+
+    c.execute("""SELECT * FROM product""")
+    print(c.fetchall())
+        
     
