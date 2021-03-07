@@ -3,7 +3,7 @@ import json
 import requests
 from pprint import pprint
 
-def find_products():
+def request_products() -> list:
     
     datas = requests.get("https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tagtype_1=countries&tag_contains_1=france&page_size=10&json=1.json", )
     if datas.status_code == 200:
@@ -85,5 +85,5 @@ def find_datas():
     
 if __name__ == "__main__":
     #find_datas()
-    find_products()
+    request_products()
     
