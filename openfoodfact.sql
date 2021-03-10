@@ -15,12 +15,12 @@ CREATE TABLE Category_product(
     )ENGINE=InnoDB;
 CREATE TABLE product(
 	id INTEGER UNSIGNED AUTO_INCREMENT,
-	nutriscore_id INTEGER NOT NULL,
 	name VARCHAR(400) NOT NULL,   
 	code VARCHAR(100) NOT NULL,
     description VARCHAR(800) ,
     url VARCHAR(400) NOT NULL,
-    store VARCHAR(400) NOT NULL,
+    store VARCHAR(400),
+	nutriscore_id INTEGER UNSIGNED,
 	PRIMARY KEY(id)
 	)ENGINE=InnoDB;
 
@@ -43,8 +43,12 @@ CREATE TABLE nutriscore(
 	PRIMARY KEY(id)
     )ENGINE=InnoDB;
 
+ALTER TABLE product MODIFY COLUMN store VARCHAR(400)  
+CHARACTER SET utf8 COLLATE utf8_general_ci;
+
 ALTER TABLE Category_product ADD CONSTRAINT fk_category_id FOREIGN KEY (id) REFERENCES category(id);
 ALTER TABLE Category_product ADD CONSTRAINT fk_product_id FOREIGN KEY (id) REFERENCES product(id);
-ALTER TABLE product ADD CONSTRAINT fk_nutriscore_id FOREIGN KEY (id) REFERENCES nutriscore(id);
+ALTER TABLE product ADD CONSTRAINT fk_nutriscore_id FOREIGN KEY (nutriscore_id) REFERENCES nutriscore(id);
 INSERT INTO nutriscore(score)
 VALUES ('A'), ('B'), ('C'), ('D'), ('E');
+
