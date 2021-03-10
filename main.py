@@ -22,9 +22,10 @@ def get_products() -> list:
     if prods:
         print("*********____DONE____*******")
     products = prods['products']
-    print(type(products))  
-    #pprint(products) 
+    print(type(products))
+    #pprint(products)
     return products
+
 
 def get_categories() -> list:
     categ_infos = []
@@ -54,56 +55,32 @@ def get_categories() -> list:
 
 def clean_product(product: dict) -> dict:
     cleaned_product = {}
-    if product["product_name"]:
-        print("product is valid")
-        cleaned_product["prod_name"] = product["product_name"]     
-    else:
-        cleaned_product["prod_name"]= None
-        print("this product isn't valid")
-        pass
-    if product["code"]:
-        print("code is valid")
-        cleaned_product["prod_code"] = product["code"]
-    else:
-        cleaned_product["prod_code"]= None
-        print("this code isn't valid")    
-        pass
-    if (type(product["ingredients_text_fr"])==str and len(product["ingredients_text_fr"]) >= 5 ):
-        print("description is valid")
-        cleaned_product["details"] = product["ingredients_text_fr"]     
-    else:
-        cleaned_product["details"]= None
-        print("this description isn't valid")
-        pass
-    if product["url"]:
-        print("link is valid")
-        cleaned_product["link"] = product["url"]     
-    else:
-        cleaned_product["link"]= None
-        print("this link isn't valid")
-        pass
-    if str(product["stores"]):
-        print("store is valid")
-        cleaned_product["prod_store"] = product["stores"]     
-    else:
-        cleaned_product["prod_store"]= None
-        print("this store isn't valid")
-        pass
-    if product["nutriscore_grade"]:
-        print("nutriscore is valid")
-        cleaned_product["nutri_score"] = product["nutriscore_grade"]     
-    else:
-        cleaned_product["nutri_score"]= None
-        print("this nutriscore isn't valid")
-        pass   
-    
+    wanted_keys = {
+        "product_name": "name",
+        "code": "code",
+        "ingredients_text_fr": "details",
+        "url": "url",
+        "stores": "stores",
+        "nutriscore_grade": "nutriscore",
+    }
+    for base_key, key in wanted_key.items():
+        is_a_critical_key = not product.get(base_key) and key != "details"
+        details_is_too_short = key == "details" and product[key] < 5
+
+        if is_a_critical_key:
+            return None
+        if details_is_too_short:
+            continue
+
+        cleaned_product[key] = product[key]
     return cleaned_product
-    
+
+
 def insert_product(product):
     cleaned_product= clean_product(product)
     cleaned_product["nutri_score"]=convert_score(cleaned_product["nutri_score"])
     print(cleaned_product)
-    insert_product_query =  'INSERT INTO product (name, code, description, url, store, nutriscore_id)  VALUES (%s, %s, %s, %s, %s, %s)' 
+    insert_product_query =  'INSERT INTO product (name, code, description, url, store, nutriscore_id)  VALUES (%s, %s, %s, %s, %s, %s)'
     c.execute(insert_product_query, (cleaned_product["prod_name"], cleaned_product["prod_code"], cleaned_product["details"], cleaned_product["link"], cleaned_product["prod_store"],  cleaned_product["nutri_score"]))
     connexion.commit()
 
@@ -112,7 +89,7 @@ def insert_categories(category):
     c.execute(insert_category_query, (category, ))
     connexion.commit()
 
-def main(): 
+def main():
     products = get_products()
     for product in products:
         insert_product(product)
@@ -124,11 +101,10 @@ def main():
         insert_categories(category)
     c.execute('SELECT * FROM category')
     connexion.commit()
-    print(c.fetchall())  
+    print(c.fetchall())
 
-    
+
 if __name__ == "__main__":
     connexion = connect_db(USER, PASSWORD, HOST, DATABASE_NAME)
     c = connexion.cursor(buffered=True)
     main()
-    
