@@ -27,7 +27,9 @@ class Interface_diplay:
     def display_all_categories(self):
         query = "SELECT * FROM category ORDER BY id"
         self.inserttables.cnx.execute(query)
-        print((self.inserttables.cnx.fetchall()))
+        categs = self.inserttables.cnx.fetchall()
+        # print(categs)
+        return categs
 
     def display_all_products(self, category_id):
         query = (
@@ -37,7 +39,9 @@ class Interface_diplay:
             " WHERE category_product.category_id=%s"
         )
         self.inserttables.cnx.execute(query, (category_id, ))
-        print((self.inserttables.cnx.fetchall()))
+        prods = self.inserttables.cnx.fetchall()
+        print(prods)
+        return prods
 
     def display_product(self, entry_number):
         query = "SELECT * FROM product WHERE id=%s"
@@ -99,3 +103,11 @@ class Interface_diplay:
         )
         self.inserttables.cnx.execute(query, (sub_id, ))
         print((self.inserttables.cnx.fetchall()))
+
+    def display_all_substitutes(self):
+        query = (
+            "SELECT * FROM favorite"
+        )
+        self.inserttables.cnx.execute(query)
+        subs = self.inserttables.cnx.fetchall()
+        return subs
