@@ -3,6 +3,27 @@ from mvc_modules.application import AppSql
 from mvc_modules.view import Interface_diplay
 
 
+class HomeCommand:
+  command = "goto_home"
+
+
+class CategoriesCommand:
+  command = "goto_categories"
+
+
+class ProductsCommand:
+  command = "goto_products"
+
+  def __init__(self, category_id):
+      self.diplay = Interface_diplay()
+      self.products = self.diplay.display_all_products(category_id)
+      return self.products
+
+
+class QuitCommand:
+  command = "quit"
+
+
 class Home:
     name = "home"
 
@@ -17,15 +38,13 @@ class Home:
 
 
 class Categories:
-    name = "categories"
 
     def __init__(self):
-        self.disp = Interface_diplay()
-        self.choice = None
+        self.interfacing = Interface_diplay()
 
     def display(self):
         print("Voici les categories...")
-        lst = self.disp.display_all_categories()
+        lst = self.interfacing.display_all_categories()
         i = 1
         for item in lst:
             name = item[1]
@@ -39,36 +58,22 @@ class Categories:
         self.choice = input("choisi une catégory ")
         if self.choice:
             print(self.choice)
-            return "goto_products"
+            return ProductsCommand(self.choice)
         else:
-            return "quit"
+            return QuitCommand()
 
-        #choice = input("1: aller aux substitutes - 2: quitter ")
-        #if choice == "1":
-        #    return "goto_substitutes"
-        #else:
-        #    return "quit"
 
 class Products:
     name = "products"
 
-    def __init__(self):
-        self.disp = Interface_diplay()
-        self.categ = Categories()
-        self.group = self.categ.choice
+    def __init__(self, products):
+#        self.interfacing = ProductsCommand()
+        self.product = self.interfacing.products  # on attend des produits ici !
 
     def display(self):
-        print("Voilà les produits qui appartiennent à cette catégory...")
-
-        #self.ident = self.categ.choice1 
-        print(self.group)
-        if self.group:
-            prods = self.disp.display_all_products(self.group)
-            print(prods)
-        else:
-            return "quit"
-
-
+        print("Voilà les produits qui appartiennent à cette catégory...") 
+        for product in self.products:
+          print(product)
 
 
 class Controller:
@@ -78,19 +83,15 @@ class Controller:
     def run(self):
         running = True
         while running:
-            command = self.page.display()
+            command = self.page.display()  # on récupère un objet Command !
             if command == "goto_home":
                 self.page = Home()
             elif command == "goto_categories":
                 self.page = Categories()
             elif command == "goto_products":
-                self.page = Products()
-            #elif command == "goto_substitutes":
-            #    self.page = Substitutes()
-                #print("Pas encore implémenté ! :(")
+                self.page = Products(command.products)
             elif command == "quit":
                 running = False
-            
 
 
 Controller().run()

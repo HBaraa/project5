@@ -1,4 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
+from script import Products
 import string
 import re
 import mysql.connector
@@ -11,7 +12,7 @@ from mvc_modules.insertion import InsertIntoTables
 class Interface_diplay:
     def __init__(self):
         self.inserttables = InsertIntoTables()
-
+        
     def display_category(self, number):
         first_query = "SELECT category.name FROM category WHERE id=%s"
         self.inserttables.cnx.execute(first_query, (number, ))
@@ -46,7 +47,10 @@ class Interface_diplay:
     def display_product(self, entry_number):
         query = "SELECT * FROM product WHERE id=%s"
         self.inserttables.cnx.execute(query, (entry_number, ))
-        print((self.inserttables.cnx.fetchall()))
+        elements = self.inserttables.cnx.fetchall()
+        for element in elements:
+            print(element)
+
 
     def get_sustitute_id(self, prod_id, categ_id):
         substitute_id = ""
