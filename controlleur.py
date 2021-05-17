@@ -12,12 +12,14 @@ class CategoriesCommand:
 
 
 class ProductsCommand:
-  command = "goto_products"
+    command = "goto_products"
 
-  def __init__(self, category_id):
-      self.diplay = Interface_diplay()
-      self.products = self.diplay.display_all_products(category_id)
-      return self.products
+    def __init__(self, category_id):
+        self.diplay = Interface_diplay()
+        self.products = self.diplay.display_all_products(category_id)
+
+    def found_products(self):
+        return Products(self.products)
 
 
 class QuitCommand:
@@ -41,6 +43,7 @@ class Categories:
 
     def __init__(self):
         self.interfacing = Interface_diplay()
+        self.choice = None
 
     def display(self):
         print("Voici les categories...")
@@ -58,7 +61,7 @@ class Categories:
         self.choice = input("choisi une catégory ")
         if self.choice:
             print(self.choice)
-            return ProductsCommand(self.choice)
+            return Products(self.choice)
         else:
             return QuitCommand()
 
@@ -66,14 +69,20 @@ class Categories:
 class Products:
     name = "products"
 
-    def __init__(self, products):
-#        self.interfacing = ProductsCommand()
-        self.product = self.interfacing.products  # on attend des produits ici !
+    def __init__(self, products):    
+        self.product = products  # on attend des produits ici !
 
     def display(self):
         print("Voilà les produits qui appartiennent à cette catégory...") 
-        for product in self.products:
-          print(product)
+        for item in self.product:
+            print("c'est un produit")
+            print(item)
+        if self.product:
+            print("doing well")
+            return  QuitCommand()
+        else:
+            print("no product")
+            return  QuitCommand()
 
 
 class Controller:

@@ -1,5 +1,4 @@
 ﻿# -*- coding: utf-8 -*-
-from script import Products
 import string
 import re
 import mysql.connector
@@ -48,8 +47,9 @@ class Interface_diplay:
         query = "SELECT * FROM product WHERE id=%s"
         self.inserttables.cnx.execute(query, (entry_number, ))
         elements = self.inserttables.cnx.fetchall()
-        for element in elements:
-            print(element)
+        #for element in elements:
+        print(elements)
+        return elements
 
 
     def get_sustitute_id(self, prod_id, categ_id):
