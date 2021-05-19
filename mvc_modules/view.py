@@ -28,7 +28,7 @@ class Interface_diplay:
         query = "SELECT * FROM category ORDER BY id"
         self.inserttables.cnx.execute(query)
         categs = self.inserttables.cnx.fetchall()
-        # print(categs)
+        #print(categs)
         return categs
 
     def display_all_products(self, category_id):
