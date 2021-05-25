@@ -20,14 +20,6 @@ class AppSql:
             self.inserttables.fill_tables(product, cleaned_product)
             product_id = self.inserttables.get_product_id()
             self.categories = get_categories(product)
-            # if product.get("categories"):
-                # self.categories = product.get("categories")
-                # print(categories)
-                # print(type(categories))
-                # categories_names = self.categories.split(',')
-                # print(list(categories_names))
-                # n=len(categories_names)
-                # print(n)
             for category_name in self.categories:
                 self.inserttables.insert_categories(category_name)
                 category_id = self.inserttables.get_category_id()

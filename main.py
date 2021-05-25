@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from mvc_modules.application import AppSql
-from mvc_modules.view import Interface_diplay
+from mvc_modules.interfacing import Interface_diplay
 
 
 def main_script():
@@ -19,7 +19,7 @@ def main_script():
             print("NIce")
             interface.display_category(category_id)
             interface.display_all_products(category_id)
-            product_choice = input("Choose a number and type its id  :  ")
+            product_choice = input("Choose a product and type its id  :  ")
             product_id = int(product_choice)
             if product_id in range(50):
                 print("you have choosen a product")

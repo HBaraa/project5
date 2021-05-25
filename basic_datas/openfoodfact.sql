@@ -56,6 +56,7 @@ CREATE TABLE nutriscore(
 
 ALTER TABLE  category ADD CONSTRAINT unique_name UNIQUE (name);
 CREATE UNIQUE INDEX uk_categories ON category(id, name);
+
 ALTER TABLE  product ADD CONSTRAINT unique_code UNIQUE (code);
 CREATE UNIQUE INDEX uk_products ON product(id, code);
 ALTER TABLE category_product ADD CONSTRAINT fk_category_id FOREIGN KEY (category_id) REFERENCES category(id);

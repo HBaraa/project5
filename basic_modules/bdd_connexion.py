@@ -12,7 +12,7 @@ def connect_db(USER, PASSWORD, HOST, DATABASE_NAME):
                                     host=HOST,
                                     database=DATABASE_NAME)
         cursor = connexion.cursor
-        print (" ****** connected to database ****** ")
+       #print (" ****** connected to database ****** ")
     except Error as e:
         print(f"The error '{e}' occurred")
         pass

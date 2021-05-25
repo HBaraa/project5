@@ -43,7 +43,7 @@ class InsertIntoTables:
 
     def insert_categories(self, category_name):
         insert_category_query = (
-            "INSERT IGNORE INTO category  (name)"
+            "INSERT IGNORE INTO category (name)"
             "  VALUES (%s)"
         )
         self.cnx.execute(insert_category_query, (category_name, ))
