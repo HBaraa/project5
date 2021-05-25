@@ -1,6 +1,11 @@
 ﻿# -*- coding: utf-8 -*-
+import os
+
 from mvc_modules.application import AppSql
 from mvc_modules.interfacing import Interface_diplay
+
+def cls():
+    os.system('cls' if os.name=='nt' else 'clear')
 
 
 class HomeCommand:
@@ -65,13 +70,19 @@ class Products:
         self.products = products  # on attend des produits ici !
         self.product_display = Interface_diplay()
         
-
+    
        
     def display(self):
-        print("Voilà les produits qui appartiennent à cette catégorie...") 
-        print("c'est un produit")
-        print(self.products)
+        cls()
+        print("Voilà les produits qui appartiennent à cette catégorie...")    
+        for j, product in enumerate(self.products, start=1):
+            print(" ******* Le procuit ", j, " du catégorie choisie ****** ")
+            id = product[0]
+            name = product[1]
+            print("l'identifiant =  ",id )
+            print("le nom =  ", name)
         choice_product = input("choisit un product et entrer son id  ")
+        cls()
         self.product_display.display_details(choice_product)
         #substitute_id = self.product_display.get_sustitute_id(self.choice_product, self.category_id)
         #self.product_display.display_substitute(substitute_id)
