@@ -36,7 +36,7 @@ ALTER TABLE category MODIFY COLUMN name VARCHAR(200)
 CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 CREATE TABLE Favorite(
-	id INTEGER UNSIGNED AUTO_INCREMENT,
+	id INTEGER UNSIGNED AUTO_INCREMENT UNIQUE,
 	substituted_id INTEGER UNSIGNED NOT NULL,
 	substitute_id INTEGER UNSIGNED NOT NULL,
 	PRIMARY KEY(id),
@@ -59,6 +59,7 @@ CREATE UNIQUE INDEX uk_categories ON category(id, name);
 
 ALTER TABLE  product ADD CONSTRAINT unique_code UNIQUE (code);
 CREATE UNIQUE INDEX uk_products ON product(id, code);
+CREATE UNIQUE INDEX uk_favorite ON favorite(substituted_id, substitute_id);
 ALTER TABLE category_product ADD CONSTRAINT fk_category_id FOREIGN KEY (category_id) REFERENCES category(id);
 ALTER TABLE category_product ADD CONSTRAINT fk_product_id FOREIGN KEY (product_id) REFERENCES product(id);
 ALTER TABLE product ADD CONSTRAINT fk_nutriscore_id FOREIGN KEY (nutriscore_id) REFERENCES nutriscore(id);

@@ -1,16 +1,34 @@
 ﻿# -*- coding: utf-8 -*-
 import os
 
-from modules.application import AppSql
-from modules.interfacing import Interface_diplay
+from mvc_modules.application import AppSql
+from mvc_modules.interfacing import Interface_diplay
 
+
+class Controller:
+    def __init__(self):
+        self.running = False
+        self.page = HomePage()
+
+    def run(self):
+        self.running = True
+        while self.running:
+            self.cls()
+            command = self.page.display()
+            command.execute(controller=self)
+
+
+    def cls(self):
+        os.system("cls" if os.name == "nt" else "clear")
 
 
 class HomeCommand:
     name = "goto_home"
 
+
 class CategoriesCommand:
     name = "goto_categories"
+
 
 class ProductsCommand:
     name = "goto_products"
@@ -19,6 +37,7 @@ class ProductsCommand:
         self.category_id = category_id
         self.interfacing = Interface_diplay()
         self.products = self.interfacing.display_all_products(self.category_id)
+
 
 class SubstitutesCommand:
     """ cette classe sert à insérer les substituts dans la table Favoris et les afficher aprés """
@@ -36,28 +55,14 @@ class SubstitutesCommand:
             if (item != self.product_id) and (score < self.nutriscore):
                 self.substituteid = item
             else:
-                self.substituteid = self.product_id
                 pass
-      
 
 
-class SaveSubstituteCommand:
-    name = "save_substitute"
-
-    def __init__(self, product_id, substitute_id):
-        self.product_id = product_id
-        self.substitute_id = substitute_id
-        self.interface = Interface_diplay()
-        self.interface.save_substitute(self.product_id, self.substitute_id)
-           
-class DisplayFavorisCommand:
-     name = "goto_favoris"
- 
 class QuitCommand:
     name = "quit"
 
 
-class Home:
+class HomePage:
     
     def display(self):
         print("Bienvenue !")
@@ -69,8 +74,7 @@ class Home:
             return QuitCommand()
 
 
-class Categories:
-    
+class CategoryPage:
     def __init__(self):
         self.filltables = AppSql()
         self.interfacing = Interface_diplay()
@@ -93,10 +97,10 @@ class Categories:
             return QuitCommand()
 
 
-class Products:
+class ProductPage:
 
     def __init__(self, products):    
-        self.categories = Categories()
+        self.categories = CategoryPage()
         self.category_id = self.categories.choice
         self.productcommand = ProductsCommand(self.category_id)
         self.products = products  # on attend des produits ici !
@@ -119,16 +123,15 @@ class Products:
         self.product_display.display_details(self.choice_product)
         return SubstitutesCommand(self.choice_product ,self.substitutes_id)
 
-
-class Substitutes:
+class SubstitutesPage:
     
-    def __init__(self, product, substitute):
+    def __init__(self, substitutes):
         self.productdisplay = Interface_diplay()
-        #self.categories = Categories()  
-        #self.category_id = self.categories.choice
-        self.product_id = product
-        #self.product_id = self.products.choice_product
-        self.substitute_id = substitute
+        self.categories = CategoryPage()  
+        self.category_id = self.categories.choice
+        self.products = ProductPage(self.category_id)
+        self.product_id = self.products.choice_product
+        self.substitutes_id = substitutes
        
     def display(self): 
         print("-" * 80)
@@ -139,74 +142,25 @@ class Substitutes:
         ">" * 30, "\n",
         ">" * 20, "\n",
         ">" * 10, "\n")  
-        self.productdisplay.display_details(self.substitute_id) 
+        self.productdisplay.display_details(self.substitutes_id) 
         self.save_choice = input("1: sauvegader ce substitut parmis tes favoris  - 2: quitter ")
         if self.save_choice == "1":          
-            return SaveSubstituteCommand(self.product_id, self.substitute_id) 
+            return SaveSubstitueCommand(self.product_id, self.substitutes_id) 
         else:
             return QuitCommand()
 
+class SaveSubstitueCommand:
+    name = "save_substitute"
 
-class SaveSubstitute:
-
-    def __init__(self):
-        self.interfacing = Interface_diplay()
-      
-    def display(self):
-        print("Produit sauvegardé dans tes favoris")
-        user_choice = input("1- Voir vos favoris tape\n2- Chercher le substitut d'un autre produit\n3- Quitter l'application\n==========>>")
-        if user_choice == "1":
-            return DisplayFavorisCommand()
-        elif user_choice == "2":
-            return HomeCommand()
-        elif user_choice == "3":
-            return QuitCommand()
-        else:
-            return HomeCommand()
+    def __init__(self, product_id, substitute_id):
+        self.product_id = product_id
+        self.substitute_id = substitute_id
+        self.interface = Interface_diplay()
+        
+    def execute(self, controller):
+        self.interface.save_substitute(self.product_id, self.substitute_id)
+        self.controller.page = HomePage()
 
 
-class DisplayFavoris:
-    def __init__(self):
-        self.interfacing = Interface_diplay()
-
-    def display(self):
-        #self.interfacing.display_all_substitutes()
-        self.interfacing.display_saved_favorites()
-        print ("fovoris displayed")
-        return QuitCommand()
-
-
-class Controller:
-
-    def __init__(self):
-        self.page = Home()        
-    
-    def cls():
-        os.system('cls' if os.name=='nt' else 'clear')
-    
-    def run(self):
-        running = True
-        while running:
-            command = self.page.display()  # on récupère un objet Command !
-            if command.name == "goto_home":
-                Controller.cls()
-                self.page = Home()
-            elif command.name == "goto_categories":
-                Controller.cls()
-                self.page = Categories()
-            elif command.name == "goto_products":
-                Controller.cls()
-                self.page = Products(command.products)
-            elif command.name == "goto_substitutes":
-                self.page = Substitutes(command.product_id, command.substituteid)
-            elif command.name == "save_substitute":
-                Controller.cls()
-                self.page = SaveSubstitute()
-            elif command.name ==  "goto_favoris":
-                self.page = DisplayFavoris()
-            elif command.name== "quit":
-                running = False
-
-    
 if __name__ == "__main__":
     Controller().run()
