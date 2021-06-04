@@ -20,4 +20,4 @@ def convert_score(score):
 
 
 if __name__ == "__main__":
-    convert_score(score)
+    convert_score()
