@@ -1,11 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
-import string
-import re
-from pprint import pprint
-
-
 from modules.insertion import InsertIntoTables
 from basic_modules.get_datas import get_products, get_categories, clean_product
+
 
 class AppSql:
     def __init__(self):
