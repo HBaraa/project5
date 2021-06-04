@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import json
 import requests
 
 from basic_modules.scoreconv import convert_score
