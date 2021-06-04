@@ -1,13 +1,7 @@
 # -*- coding: utf-8 -*-
-import string
-import mysql.connector
-from mysql.connector import Error
-
-
-from basic_data.data_connexion import DATABASE_NAME, HOST, USER, PASSWORD
+from basic_datas.data_connexion import DATABASE_NAME, HOST, USER, PASSWORD
 from basic_modules.bdd_connexion import connect_db
-from basic_modules.get_datas import get_products, get_categories, clean_product
-from basic_modules.scoreconv import convert_score
+from basic_modules.get_datas import get_products, clean_product
 
 connexion = connect_db(USER, PASSWORD, HOST, DATABASE_NAME)
 cnx = connexion.cursor(buffered=True)
@@ -15,8 +9,6 @@ cnx = connexion.cursor(buffered=True)
 
 def fill_tables(product, cleaned_product):
     if product.get("nutriscore_grade") in ["a", "b", "c", "d", "e"]:
-        grade = product.get("nutriscore_grade")
-        nutri_grade = convert_score(grade)
         # print(cleaned_product)
         insert_product_query = (
             'INSERT IGNORE INTO product'
