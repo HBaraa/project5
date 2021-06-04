@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
-import json
-import re
 import requests
-from pprint import pprint
 
 from basic_modules.scoreconv import convert_score
 
-URL = "https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tagtype_1=countries&tag_contains_1=france&page_size=10&json=1.json"
+URL = (
+    "https://world.openfoodfacts.org/cgi/search.pl?action=",
+    "process&tagtype_0=",
+    " categories&tagtype_1=countries&tag_contains_1=",
+    "france&page_size=10&json=1.json")
 
 
 def get_products() -> list:
@@ -38,7 +39,7 @@ def get_categories(product: dict) -> list:
     category_list = product.get("categories")
     clean_categories = category_list.split(',')
     for category in clean_categories:
-        if type(category) == str :
+        if type(category) == str:
             # print("category is valid")
             categories.append(category)
     # print(categories)
