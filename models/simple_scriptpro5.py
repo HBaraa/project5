@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from modules.application import AppSql
-from modules.interfacing import Interface_diplay
+from models.application import AppSql
+from models.interfacing import Interface_diplay
 
 
 def main_script():

@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
-from modules.interfacing import Interface_diplay
+from models.interfacing import Interface_diplay
 
 
 class HomeCommand:

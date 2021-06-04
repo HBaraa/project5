@@ -2,8 +2,8 @@
 from mvc_modules.commands import HomeCommand, CategoriesCommand, QuitCommand
 from mvc_modules.commands import ProductsCommand, SubstitutesCommand
 from mvc_modules.commands import SaveSubstituteCommand, DisplayFavorisCommand
-from modules.application import AppSql
-from modules.interfacing import Interface_diplay
+from models.application import AppSql
+from models.interfacing import Interface_diplay
 
 
 class Home:
