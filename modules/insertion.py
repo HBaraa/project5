@@ -1,14 +1,6 @@
 # -*- coding: utf-8 -*-
-import string
-import re
-import mysql.connector
-from mysql.connector import Error
-from pprint import pprint
-
-
-from basic_datas.data_connexion import *
+from basic_datas.data_connexion import USER, PASSWORD, HOST, DATABASE_NAME
 from basic_modules.bdd_connexion import connect_db
-from basic_modules.scoreconv import convert_score
 
 
 class InsertIntoTables:
@@ -18,8 +10,6 @@ class InsertIntoTables:
 
     def fill_tables(self, product, cleaned_product):
         if product.get("nutriscore_grade") in ["a", "b", "c", "d", "e"]:
-            grade = product.get("nutriscore_grade")
-            nutri_grade = convert_score(grade)
             # print(cleaned_product)
             insert_product_query = (
                 'INSERT IGNORE INTO product'
