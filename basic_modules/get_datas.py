@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
+import json
 import requests
 
 from basic_modules.scoreconv import convert_score
 
 URL = (
-    "https://world.openfoodfacts.org/cgi/search.pl?action=",
-    "process&tagtype_0=",
-    " categories&tagtype_1=countries&tag_contains_1=",
-    "france&page_size=10&json=1.json")
+    "https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tagtype_1=countries&tag_contains_1=france&page_size=10&json=1.json"
+    )
 
 
 def get_products() -> list:

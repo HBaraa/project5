@@ -121,8 +121,8 @@ class SaveSubstitute:
     def display(self):
         print("Produit sauvegardé dans tes favoris")
         user_choice = input(
-            "1- Voir vos favoris\n",
-            "2- Chercher le substitut d'un autre produit\n",
+            "1- Voir vos favoris\n"
+            "2- Chercher le substitut d'un autre produit\n"
             "3- Quitter l'application\n==========>>"
             )
         if user_choice == "1":
