@@ -1,19 +1,13 @@
 ﻿# -*- coding: utf-8 -*-
-import string
-import re
-import mysql.connector
-from mysql.connector import Error
-
-
 from modules.insertion import InsertIntoTables
 
 
 class Interface_diplay:
     def __init__(self):
         self.inserttables = InsertIntoTables()
-        self.nutrition_= None
+        self.nutrition = None
         self.substitute_id = None
-        
+
     def display_category(self, number):
         first_query = "SELECT category.name FROM category WHERE id=%s"
         self.inserttables.cnx.execute(first_query, (number, ))
@@ -30,7 +24,7 @@ class Interface_diplay:
         query = "SELECT * FROM category ORDER BY id"
         self.inserttables.cnx.execute(query)
         categories = self.inserttables.cnx.fetchall()
-        #print(categories)
+        # print(categories)
         return categories
 
     def display_all_products(self, category_id):
@@ -42,17 +36,16 @@ class Interface_diplay:
         )
         self.inserttables.cnx.execute(query, (category_id, ))
         prods = self.inserttables.cnx.fetchall()
-        #print(prods)
+        # print(prods)
         return prods
 
     def display_product(self, entry_number):
         query = "SELECT * FROM product WHERE id=%s"
         self.inserttables.cnx.execute(query, (entry_number, ))
         elements = self.inserttables.cnx.fetchall()
-        #for element in elements:
-        #print(elements)
+        # for element in elements:
+        # print(elements)
         return elements
-
 
     def get_sustitute_id(self, prod_id, categ_id):
         substitute_id = ""
@@ -95,18 +88,19 @@ class Interface_diplay:
 
     def display_saved_favorites(self):
         query_substituted = (
-            "SELECT * FROM product"
+            "SELECT product.id, product.name, product.code, product.url,"
+            " product.store, product.nutriscore_id FROM product"
             " INNER JOIN favorite ON product.id = favorite.substituted_id"
         )
-        self.inserttables.cnx.execute( query_substituted)
+        self.inserttables.cnx.execute(query_substituted)
         print(self.inserttables.cnx.fetchall())
         print("les substituts de ces produits sont :")
         query_substitute = (
-            "SELECT * FROM product"
+            "SELECT product.id, product.name, product.code, product.url,"
+            " product.store, product.nutriscore_id FROM product"
             " INNER JOIN favorite ON product.id = favorite.substitute_id"
         )
-        
-        self.inserttables.cnx.execute( query_substitute)
+        self.inserttables.cnx.execute(query_substitute)
         print(self.inserttables.cnx.fetchall())
 
     def display_substitute(self, sub_id):
@@ -127,36 +121,39 @@ class Interface_diplay:
 
     def display_details(self, product_id):
         details_query = (
-            "SELECT name, code, description, url, store, nutriscore_id FROM product"
+            "SELECT name, code, description, url,"
+            " store, nutriscore_id FROM product"
             " WHERE product.id = %s "
         )
         self.inserttables.cnx.execute(details_query, (product_id, ))
         details = self.inserttables.cnx.fetchall()
         self.inserttables.connexion.commit()
-        #print(details)
+        # print(details)
         for detail in details:
             self.nutrition_grade = detail[5]
-            print("-", "Nom".center(40), ":", detail[0], "\n",
-            "-", "Code".center(40), ":", detail[1], "\n",
-            "-", "Ingrédients".center(40), ":", detail[2], "\n",
-            "-", "Url".center(40), ":", detail[3], "\n",
-            "-", "Magasins".center(40), ":", detail[4], "\n",
-            "-", "Nutriscore".center(40), ":", detail[5], "\n"
-            )
+            print(
+                "-", "Nom".center(40), ":", detail[0], "\n",
+                "-", "Code".center(40), ":", detail[1], "\n",
+                "-", "Ingrédients".center(40), ":", detail[2], "\n",
+                "-", "Url".center(40), ":", detail[3], "\n",
+                "-", "Magasins".center(40), ":", detail[4], "\n",
+                "-", "Nutriscore".center(40), ":", detail[5], "\n"
+             )
 
     def score(self, product_id):
         details_query = (
-            "SELECT name, code, description, url, store, nutriscore_id FROM product"
+            "SELECT name, code, description, url,"
+            " store, nutriscore_id FROM product"
             " WHERE product.id = %s "
         )
         self.inserttables.cnx.execute(details_query, (product_id, ))
         details = self.inserttables.cnx.fetchall()
         self.inserttables.connexion.commit()
-        #print(details)
+        # print(details)
         for detail in details:
             grade = detail[5]
             return grade
-        
+
     def substitute_product(self, category_id):
         query = (
             "SELECT product.id FROM product"
@@ -167,12 +164,11 @@ class Interface_diplay:
         self.inserttables.cnx.execute(query, (category_id, ))
         substitute_id = self.inserttables.cnx.fetchall()
         return substitute_id
-        
+
     def insert_substitute(self, product_id, substitute_id):
-        query =(
+        query = (
             "INSERT IGNORE INTO favorite (substituted_id, substitute_id)"
             " VALUES(%s, %s)"
         )
         self.inserttables.cnx.execute(query, (product_id, substitute_id))
         self.inserttables.connexion.commit()
-        

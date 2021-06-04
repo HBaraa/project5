@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from mvc_modules.application import AppSql
-from mvc_modules.interfacing import Interface_diplay
+from modules.application import AppSql
+from modules.interfacing import Interface_diplay
 
 
 def main_script():
