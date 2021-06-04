@@ -1,21 +1,18 @@
 ﻿# -*- coding: utf-8 -*-
 import os
 
-from modules.application import AppSql
-from modules.interfacing import Interface_diplay
-
-from mvc_modules.commands import HomeCommand, CategoriesCommand, ProductsCommand, SubstitutesCommand, SaveSubstituteCommand, DisplayFavorisCommand, QuitCommand
-from mvc_modules.views import Home, Categories, Products, Substitutes,SaveSubstitute, DisplayFavoris
+from mvc_modules.views import Home, Categories, Products, Substitutes
+from mvc_modules.views import SaveSubstitute, DisplayFavoris
 
 
 class Controller:
 
     def __init__(self):
         self.page = Home()
-    
+
     def cls():
-        os.system('cls' if os.name=='nt' else 'clear')
-    
+        os.system('cls' if os.name == 'nt' else 'clear')
+
     def run(self):
         running = True
         while running:
@@ -30,13 +27,15 @@ class Controller:
                 Controller.cls()
                 self.page = Products(command.products)
             elif command.name == "goto_substitutes":
-                self.page = Substitutes(command.product_id, command.substituteid)
+                self.page = Substitutes(
+                    command.product_id, command.substituteid
+                 )
             elif command.name == "save_substitute":
                 Controller.cls()
                 self.page = SaveSubstitute()
-            elif command.name ==  "goto_favoris":
+            elif command.name == "goto_favoris":
                 self.page = DisplayFavoris()
-            elif command.name== "quit":
+            elif command.name == "quit":
                 running = False
 
 
