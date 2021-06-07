@@ -11,7 +11,7 @@ class Home:
     soit aller aux catégories ou quitter le programme"""
     def display(self):
         print("Bienvenue !")
-        choice = input("1: aller aux categories - 2: quitter ")
+        choice = input("1: Aller aux catégories  - 2: Quitter ")
         if choice == "1":
             return CategoriesCommand()
         else:
@@ -29,14 +29,14 @@ class Categories:
 
     def display(self):
         self.filltables.insert_datas()
-        print(" ***    Voici les categories ***  ")
+        print(" ***    Voici les catégories   ***  ")
         categories = self.interfacing.display_all_categories()
         for i, category in enumerate(categories, start=1):
             name = category[1]
             number = "première" if i == 1 else "ème"
             print("C'est le ", i, number, "category")
             print(name)
-        self.choice = input("choisi une catégorie ")
+        self.choice = input("Choisi une catégorie ")
         if self.choice:
             print(self.choice)
             return ProductsCommand(self.choice)
@@ -73,7 +73,7 @@ class Products:
             print("le nom =  ".center(35), name)
         print("-" * 80)
         self.choice_product = input(
-            "**Choisissez un produit et entrez son id **   "
+            "**Choisir un produit et entrer son id **   "
             )
         self.product_display.display_details(self.choice_product)
         return SubstitutesCommand(self.choice_product, self.substitutes_id)
@@ -90,7 +90,7 @@ class Substitutes:
     def display(self):
         print("-" * 80)
         print(
-            "Ce produit appatient à la méme catégory choisie avec"
+            "Ce produit appatient à la méme catégorie choisie avec"
             " un nutriscore mieux que celui du produit choisit"
             )
         print(
@@ -103,7 +103,7 @@ class Substitutes:
         )
         self.productdisplay.display_details(self.substitute_id)
         self.save_choice = input(
-            "1: sauvegader ce substitut parmis tes favoris  - 2: quitter "
+            "1: Sauvegader ce substitut parmis tes favoris  - 2: Quitter "
             )
         if self.save_choice == "1":
             return SaveSubstituteCommand(self.product_id, self.substitute_id)
@@ -121,7 +121,7 @@ class SaveSubstitute:
     def display(self):
         print("Produit sauvegardé dans tes favoris")
         user_choice = input(
-            "1- Voir vos favoris\n"
+            "1- Voir tes favoris\n"
             "2- Chercher le substitut d'un autre produit\n"
             "3- Quitter l'application\n==========>>"
             )
@@ -144,5 +144,5 @@ class DisplayFavoris:
     def display(self):
         # self.interfacing.display_all_substitutes()
         self.interfacing.display_saved_favorites()
-        print("fovoris displayed")
+        print(" Products dqiplayed")
         return QuitCommand()
