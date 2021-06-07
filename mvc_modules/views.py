@@ -103,7 +103,7 @@ class Substitutes:
         )
         self.productdisplay.display_details(self.substitute_id)
         self.save_choice = input(
-            "1: Sauvegader ce substitut parmis tes favoris  - 2: Quitter "
+            "1: Sauvegarder ce substitut parmi tes favoris  - 2: Quitter "
             )
         if self.save_choice == "1":
             return SaveSubstituteCommand(self.product_id, self.substitute_id)
