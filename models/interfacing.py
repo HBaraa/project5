@@ -172,3 +172,23 @@ class Interface_diplay:
         )
         self.inserttables.cnx.execute(query, (product_id, substitute_id))
         self.inserttables.connexion.commit()
+
+    def substituted_saved(self):
+        query = (
+            "SELECT DISTINCT product.id FROM Product"
+            " INNER JOIN favorite"
+            " ON product.id = favorite.substituted_id"
+        )
+        self.inserttables.cnx.execute(query)
+        products = self.inserttables.cnx.fetchall()
+        return products
+
+    def substitute_saved(self):
+        query = (
+            "SELECT DISTINCT product.id, product.name FROM Product"
+            " INNER JOIN favorite"
+            " ON product.id = favorite.substitute_id"
+        )
+        self.inserttables.cnx.execute(query)
+        subsstitute_lst = self.inserttables.cnx.fetchall()
+        return subsstitute_lst

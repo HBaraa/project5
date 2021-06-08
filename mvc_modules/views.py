@@ -2,7 +2,6 @@
 from mvc_modules.commands import HomeCommand, CategoriesCommand, QuitCommand
 from mvc_modules.commands import ProductsCommand, SubstitutesCommand
 from mvc_modules.commands import SaveSubstituteCommand, DisplayFavorisCommand
-from models.application import AppSql
 from models.interfacing import Interface_diplay
 
 
@@ -23,12 +22,10 @@ class Categories:
     aux utilisateurs de choisir une en entrant son identifiant
     et elle retourne un appel de la commande ProductsCommand"""
     def __init__(self):
-        self.filltables = AppSql()
         self.interfacing = Interface_diplay()
         self.choice = None
 
     def display(self):
-        self.filltables.insert_datas()
         print(" ***    Voici les catégories   ***  ")
         categories = self.interfacing.display_all_categories()
         for i, category in enumerate(categories, start=1):
@@ -140,9 +137,16 @@ class DisplayFavoris:
     dans la table favorite"""
     def __init__(self):
         self.interfacing = Interface_diplay()
+        self.display_favor = DisplayFavorisCommand()
 
     def display(self):
         # self.interfacing.display_all_substitutes()
-        self.interfacing.display_saved_favorites()
-        print(" Products dqiplayed")
+        print("Les produits sauvegardés sont :  \n")
+        for product in self.display_favor.product_lst:
+            id = product[0]
+            self.interfacing.display_details(id)
+        print("les substituts sauvegardés sont :  \n")
+        for substitute in self.display_favor.substitute_lst:
+            ident = substitute[0]
+            self.interfacing.display_details(ident)
         return QuitCommand()

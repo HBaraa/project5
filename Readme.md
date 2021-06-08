@@ -32,14 +32,13 @@ La recherche doit s'effectuer sur une base MySql.
 
 ## Création de la base des données en SQL: dans le fichier "openfoodfact.sql"
 
-Création de la base de données "openfoodfact" et la sélection de cette base: la création des tables "peoduct", "category", "category_product", "Favorite" et "nutriscore".
+Création de la base de données "openfoodfact" et la sélection de cette base: la création des tables "product", "category", "category_product", "Favorite" et "nutriscore".
 Création des clées étrangéres et des contraintes d'unicité.
 
 ## Le remplissage de la base des données à partir de l'API d'openfoodfacts en utilisant les requétes API aprés l'importation de la bibliothéque "requests":
-cette tache a été effectée dans la classe "AppSQL" du fichier "classes_application" avec la foction " insert_datas" en faisant l'appel aux foctions "Fill_tables", "insert_categories", "insert_category_product", 
+cette tache a été effectée dans le dossier "models" et plus précisément dans le fichier "commands.py" et la classe "AppSQL" du fichier "classes_application" avec la fonction " insert_datas" en faisant l'appel aux foctions "Fill_tables", "insert_categories", "insert_category_product", 
 "get_product_id" et "get_category_id" de la classe "InsertIntoTables"
 
 ## L'interaction avec la base des données: 
-cette tache a été effectuée dans le fichier "main.py" en appelant les fonctions "display_category", "display_all_categories", "display_all_products", "display_product", "get_substitute_id", "get_substitute", "save_substitute", "display_saved_favorites" et "display_substitute" de la classe "Interface_display" du fichier "classes_application".
-
+cette tache a été effectuée dans le fichier "commands.py" en appelant les fonctions du module "interfacing.py" qui dans lequel, il y a un accés direct au curseur de la base de donnée.
 ## 

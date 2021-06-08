@@ -1,4 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
+from models.application import AppSql
 from models.interfacing import Interface_diplay
 
 
@@ -12,6 +13,10 @@ class CategoriesCommand:
     """Cette classe permet de mettre le nom de la commande à goto_categories
     pour pouvoir appeler la calsse Categories dans le controller"""
     name = "goto_categories"
+
+    def __init__(self):
+        self.filltables = AppSql()
+        self.filltables.insert_datas()
 
 
 class ProductsCommand:
@@ -70,6 +75,13 @@ class DisplayFavorisCommand:
     pour pouvoir appeler la classe DisplayFavoris
     dans le controller   """
     name = "goto_favoris"
+
+    def __init__(self):
+        self.interface = Interface_diplay()
+        self.product_lst = self.interface.substituted_saved()
+        print(self.product_lst)
+        self.substitute_lst = self.interface.substitute_saved()
+        print(self.substitute_lst)
 
 
 class QuitCommand:
