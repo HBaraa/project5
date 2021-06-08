@@ -56,4 +56,4 @@ Pour lancer le programme, vous avez besoin de:
 	- cloner le projet sur votre machine locale
 	- créer un environnement virtuel
 	- installer les indépendances du programme
-	- taper $ py -3.9 main.py  
+	- taper $ py -3.9 main.py
