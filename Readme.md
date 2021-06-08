@@ -45,7 +45,7 @@ Et on aussi une interraction avec la base des données dans le fichier "views" d
 
 ## L'installation:
 Vous n'avez pas besoin d'installer tous les packages externes nécessaires au projet. J'ai mis en place un fichier requirements.txt qui est un fichier répertoriant les packages nécessaires que j'ai utilisé dans mon environnement virtuel.
-Afin de pouvoir utiliser ses packages, il suffit de créer un environnement virtuel en tapant dans le terminal de git bash, l'activer et d'installer des dépendances du programme :
+Afin de pouvoir utiliser ses packages, il suffit de créer un environnement virtuel , l'activer et d'installer des dépendances du programme en tapant dans le terminal de git bash:
 $ py -3.9 -m venv .venv
 $ source .venv/Scripts/activate
 $ pip install -r requirements.txt
