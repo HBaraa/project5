@@ -2,7 +2,7 @@
 from mvc_modules.commands import HomeCommand, CategoriesCommand, QuitCommand
 from mvc_modules.commands import ProductsCommand, SubstitutesCommand
 from mvc_modules.commands import SaveSubstituteCommand, DisplayFavorisCommand
-from models.interfacing import Interface_diplay
+from models.data_maping import Interface_diplay
 
 
 class Home:

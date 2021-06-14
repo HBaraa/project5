@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
-from models.insertion import InsertIntoTables
+from models.db_creation.insertion import InsertIntoTables
 from basic_modules.get_datas import get_products, get_categories, clean_product
 
 

@@ -36,11 +36,11 @@ Création de la base de données "openfoodfact" et la sélection de cette base: 
 Création des clées étrangéres et des contraintes d'unicité.
 
 ## Le remplissage de la base des données à partir de l'API d'openfoodfacts en utilisant les requétes API aprés l'importation de la bibliothéque "requests":
-cette tache a été effectée dans le dossier "models" et plus précisément dans le fichier "commands.py" qui appelle les fonctions de la classe "AppSQL" du fichier "classes_application" avec la fonction " insert_datas" en faisant l'appel aux foctions "Fill_tables", "insert_categories", "insert_category_product", 
-"get_product_id" et "get_category_id" de la classe "InsertIntoTables".
+cette tache a été effectée dans le fichier "commands.py" du package "mvc_modules". Dans ce fichier, on a fait l'appel des fonctions de la classe "AppSQL" du package "sql.py" avec la fonction " insert_datas" dans laquelle on a instancié la classe "InsertIntoTables" du package "insertion.py" et on a utilisé ses méthodes; "Fill_tables", "insert_categories", "insert_category_product", 
+"get_product_id" et "get_category_id".
 
 ## L'interaction avec la base des données: 
-cette tache a été effectuée dans le fichier "commands.py" du dossier "mvc_modules", en appelant les fonctions du module "interfacing.py" du dossier "models" pour l'insertion et la récupération des données.
+cette tache a été effectuée dans le fichier "commands.py" du dossier "mvc_modules", en appelant les fonctions du module "data_maping.py" du dossier "models" pour l'insertion et la récupération des données.
 Et on aussi une interraction avec la base des données dans le fichier "views" du dossier "mvc_modules", pour pouvoir afficher des données de la base.
 
 ## L'installation:

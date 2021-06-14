@@ -1,6 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
-from models.application import AppSql
-from models.interfacing import Interface_diplay
+from models.db_creation.sql import AppSql
+from models.data_maping import Interface_diplay
 
 
 class HomeCommand:

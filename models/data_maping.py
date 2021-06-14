@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
-from models.insertion import InsertIntoTables
+from models.db_creation.insertion import InsertIntoTables
 
 
 class Interface_diplay:

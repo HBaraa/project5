@@ -4,13 +4,13 @@ import requests
 from basic_modules.scoreconv import convert_score
 
 URL = (
-    "https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tagtype_1=countries&tag_contains_1=france&page_size=10&json=1.json"
+    "https://world.openfoodfacts.org/cgi/search.pl?action=process&tagtype_0=categories&tagtype_1=countries&tag_contains_1=france&page_size=100&json=1.json"
     )
 
 
 def get_products() -> list:
     products = []
-    datas = requests.get(URL, )
+    datas = requests.get(URL)
     if datas.status_code == 200:
         print('Success!')
     elif datas.status_code == 404:
