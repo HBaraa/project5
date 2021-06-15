@@ -54,6 +54,7 @@ class Products:
         self.product_display = Interface_diplay()
         self.substitutes_id = []
         self.choice_product = None
+        self.substitutes = None
 
     def display(self):
         print(
@@ -73,6 +74,9 @@ class Products:
             "**Choisir un produit et entrer son id **   "
             )
         self.product_display.display_details(self.choice_product)
+        self.substitutes = self.product_display.substitute_product(
+            self.category_id
+            )
         return SubstitutesCommand(self.choice_product, self.substitutes_id)
 
 

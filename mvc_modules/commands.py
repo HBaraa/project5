@@ -46,10 +46,9 @@ class SubstitutesCommand:
         self.product_id = product_id
         self.interfacing = Interface_diplay()
         self.nutriscore = self.interfacing.score(self.product_id)
-        # print(self.nutriscore)
         for item in self.substitutes_ids:
             score = self.interfacing.score(item)
-            if (item != self.product_id) and (score < self.nutriscore):
+            if (score < self.nutriscore) and (item != self.product_id):
                 self.substituteid = item
             else:
                 self.substituteid = self.product_id
