@@ -6,7 +6,9 @@ from mvc_modules.views import SaveSubstitute, DisplayFavoris
 
 
 class Controller:
-
+    """ This class is used to change the page according to the name of the
+    command by calling the class that allows you to do
+    the necessary processing"""
     def __init__(self):
         self.page = Home()
 

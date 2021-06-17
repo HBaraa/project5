@@ -3,6 +3,8 @@ from models.db_creation.insertion import InsertIntoTables
 
 
 class Interface_diplay:
+    """ This class is used to make the link between"""
+    """ MVC modules and database"""
     def __init__(self):
         self.inserttables = InsertIntoTables()
         self.nutrition = None
@@ -21,7 +23,7 @@ class Interface_diplay:
         print(self.inserttables.cnx.fetchall())
 
     def display_all_categories(self):
-        query = "SELECT * FROM category ORDER BY id"
+        query = "SELECT * FROM category ORDER BY id LIMIT 50"
         self.inserttables.cnx.execute(query)
         categories = self.inserttables.cnx.fetchall()
         return categories
@@ -94,12 +96,12 @@ class Interface_diplay:
         for detail in details:
             self.nutrition = detail[0]
             print(
-                "-", "identifiant".center(40), ":", detail[0], "\n",
-                "-", "Nom".center(40), ":", detail[1], "\n",
+                "-", "ID".center(40), ":", detail[0], "\n",
+                "-", "Name".center(40), ":", detail[1], "\n",
                 "-", "Code".center(40), ":", detail[2], "\n",
-                "-", "Ingrédients".center(40), ":", detail[3], "\n",
-                "-", "Url".center(40), ":", detail[4], "\n",
-                "-", "Magasins".center(40), ":", detail[5], "\n",
+                "-", "Description".center(40), ":", detail[3], "\n",
+                "-", "Link".center(40), ":", detail[4], "\n",
+                "-", "Stores".center(40), ":", detail[5], "\n",
                 "-", "Nutriscore".center(40), ":", detail[6], "\n"
             )
         return

@@ -6,11 +6,11 @@ from models.data_maping import Interface_diplay
 
 
 class Home:
-    """Dans cette classe, l'utilisateur est demandé de choisir
-    soit aller aux catégories ou quitter le programme"""
+    """In this class, the user is asked to choose
+     either go to categories or exit the program"""
     def display(self):
-        print("Bienvenue !")
-        choice = input("1: Aller aux catégories  - 2: Quitter ")
+        print("Welcome !")
+        choice = input("1: Go to catégories  - 2: Quit ")
         if choice == "1":
             return CategoriesCommand()
         else:
@@ -18,22 +18,22 @@ class Home:
 
 
 class Categories:
-    """cette classe sert à afficher toutes les catégories et à demander
-    aux utilisateurs de choisir une en entrant son identifiant
-    et elle retourne un appel de la commande ProductsCommand"""
+    """this class is used to display all categories and to request
+     users to choose by entering its ID
+     and it returns a call of the ProductsCommand command"""
     def __init__(self):
         self.interfacing = Interface_diplay()
         self.choice = None
 
     def display(self):
-        print(" ***    Voici les catégories   ***  ")
+        print(" ***   Here are the categories   ***  ")
         categories = self.interfacing.display_all_categories()
         for i, category in enumerate(categories, start=1):
             name = category[1]
-            number = "première" if i == 1 else "ème"
-            print("C'est le ", i, number, "category")
+            # number = "première" if i == 1 else "ème"
+            print(i, "  :  ")
             print(name)
-        self.choice = input("Choisi une catégorie ")
+        self.choice = input("choose a category ")
         if self.choice:
             print(self.choice)
             return ProductsCommand(self.choice)
@@ -42,10 +42,10 @@ class Categories:
 
 
 class Products:
-    """Cette classe sert à afficher tous les produits qui appartiennent
-    à la catégorie choisie et à demander à l'utilisateur de choisir un produit,
-    aprés, elle permet d'afficher les détails de ce prosuit et elle retourne
-    un appel de la commande SubstitutesCommand"""
+    """This class is used to display all products that belong
+     to the chosen category and to ask the user to choose a product,
+     afterwards, it allows to display the details of this prosuit and it
+     returns a call to the SubstitutesCommand"""
     def __init__(self, products):
         self.categories = Categories()
         self.category_id = self.categories.choice
@@ -58,20 +58,20 @@ class Products:
 
     def display(self):
         print(
-            "*** Voici les produits qui appartiennent à ",
-            "cette catégorie  ****"
+            "*** Here are the products that belong to ",
+            "this category  ****"
         )
         for j, product in enumerate(self.products, start=1):
             print("-" * 80)
-            print("***Le produit ", j, " du catégorie choisie***")
+            print("***The product ", j, "of the chosen category***")
             id = product[0]
             name = product[1]
             self.substitutes_id.append(id)
-            print("l'identifiant =  ".center(35), id)
-            print("le nom =  ".center(35), name)
+            print("The id =  ".center(35), id)
+            print("The name =  ".center(35), name)
         print("-" * 80)
         self.choice_product = input(
-            "**Choisir un produit et entrer son id **   "
+            "**Choose a product and enter its id **   "
             )
         self.product_display.display_details(self.choice_product)
         self.substitutes = self.product_display.substitute_product(
@@ -81,8 +81,8 @@ class Products:
 
 
 class Substitutes:
-    """Cette classe sert à afficher le substitut du produit et retoune
-    un appel de commande SaveSubstituteCommand"""
+    """This class is used to display the substitute of the product and return
+     a SaveSubstituteCommand command call"""
     def __init__(self, product, substitute):
         self.productdisplay = Interface_diplay()
         self.product_id = product
@@ -91,8 +91,8 @@ class Substitutes:
     def display(self):
         print("-" * 80)
         print(
-            "Ce produit appatient à la méme catégorie choisie avec"
-            " un nutriscore mieux que celui du produit choisit"
+            "This product belongs to the same category chosen with"
+            " a nutriscore better than that of the chosen product"
             )
         print(
             ">" * 60, "\n",
@@ -104,7 +104,7 @@ class Substitutes:
         )
         self.productdisplay.display_details(self.substitute_id)
         self.save_choice = input(
-            "1: Sauvegarder ce substitut parmi tes favoris  - 2: Quitter "
+            "1: Save this substitute among your favorites  - 2: Quit "
             )
         if self.save_choice == "1":
             return SaveSubstituteCommand(self.product_id, self.substitute_id)
@@ -113,18 +113,18 @@ class Substitutes:
 
 
 class SaveSubstitute:
-    """Dans cette classe, l'utilisateur est demandé de choisir entre
-    voir ses favoris, chercher le substitut d'un autre produit
-    ou quitter l'application"""
+    """In this class, the user is asked to choose between
+     see your favorites, find a substitute for another product
+     or quit the application"""
     def __init__(self):
         self.interfacing = Interface_diplay()
 
     def display(self):
-        print("Produit sauvegardé dans tes favoris")
+        print("Product saved in your favorites")
         user_choice = input(
-            "1- Voir tes favoris\n"
-            "2- Chercher le substitut d'un autre produit\n"
-            "3- Quitter l'application\n==========>>"
+            "1- See your favorites\n"
+            "2- Find a substitute for another product\n"
+            "3- Exit the application\n==========>>"
             )
         if user_choice == "1":
             return DisplayFavorisCommand()
@@ -137,19 +137,19 @@ class SaveSubstitute:
 
 
 class DisplayFavoris:
-    """Cette classe sert à afficher les favoris sauvegerdés
-    dans la table favorite"""
+    """This class is used to display saved favorites
+     in the favorite table"""
     def __init__(self):
         self.interfacing = Interface_diplay()
         self.display_favor = DisplayFavorisCommand()
 
     def display(self):
         # self.interfacing.display_all_substitutes()
-        print("Les produits sauvegardés sont :  \n")
+        print("Saved products are :  \n")
         for product in self.display_favor.product_lst:
             id = product[0]
             self.interfacing.display_details(id)
-        print("les substituts sauvegardés sont :  \n")
+        print("Saved substitutes are :  \n")
         for substitute in self.display_favor.substitute_lst:
             ident = substitute[0]
             self.interfacing.display_details(ident)
