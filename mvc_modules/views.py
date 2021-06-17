@@ -2,7 +2,7 @@
 from mvc_modules.commands import HomeCommand, CategoriesCommand, QuitCommand
 from mvc_modules.commands import ProductsCommand, SubstitutesCommand
 from mvc_modules.commands import SaveSubstituteCommand, DisplayFavorisCommand
-from models.data_maping import Interface_diplay
+from models.data_maping import ModelMapping
 
 
 class Home:
@@ -22,7 +22,7 @@ class Categories:
      users to choose by entering its ID
      and it returns a call of the ProductsCommand command"""
     def __init__(self):
-        self.interfacing = Interface_diplay()
+        self.interfacing = ModelMapping()
         self.choice = None
 
     def display(self):
@@ -51,7 +51,7 @@ class Products:
         self.category_id = self.categories.choice
         self.productcommand = ProductsCommand(self.category_id)
         self.products = products  # on attend des produits ici !
-        self.product_display = Interface_diplay()
+        self.product_display = ModelMapping()
         self.substitutes_id = []
         self.choice_product = None
         self.substitutes = None
@@ -84,7 +84,7 @@ class Substitutes:
     """This class is used to display the substitute of the product and return
      a SaveSubstituteCommand command call"""
     def __init__(self, product, substitute):
-        self.productdisplay = Interface_diplay()
+        self.productdisplay = ModelMapping()
         self.product_id = product
         self.substitute_id = substitute
 
@@ -117,7 +117,7 @@ class SaveSubstitute:
      see your favorites, find a substitute for another product
      or quit the application"""
     def __init__(self):
-        self.interfacing = Interface_diplay()
+        self.interfacing = ModelMapping()
 
     def display(self):
         print("Product saved in your favorites")
@@ -140,7 +140,7 @@ class DisplayFavoris:
     """This class is used to display saved favorites
      in the favorite table"""
     def __init__(self):
-        self.interfacing = Interface_diplay()
+        self.interfacing = ModelMapping()
         self.display_favor = DisplayFavorisCommand()
 
     def display(self):

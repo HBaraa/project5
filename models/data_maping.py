@@ -2,7 +2,7 @@
 from models.db_creation.insertion import InsertIntoTables
 
 
-class Interface_diplay:
+class ModelMapping:
     """ This class is used to make the link between"""
     """ MVC modules and database"""
     def __init__(self):

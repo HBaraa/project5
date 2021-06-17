@@ -1,6 +1,6 @@
 ﻿# -*- coding: utf-8 -*-
 from models.db_creation.sql import AppSql
-from models.data_maping import Interface_diplay
+from models.data_maping import ModelMapping
 
 
 class HomeCommand:
@@ -28,7 +28,7 @@ class ProductsCommand:
 
     def __init__(self, category_id):
         self.category_id = category_id
-        self.interfacing = Interface_diplay()
+        self.interfacing = ModelMapping()
         self.products = self.interfacing.display_all_products(self.category_id)
 
 
@@ -44,7 +44,7 @@ class SubstitutesCommand:
         self.perfect_product = None
         self.substitutes_ids = substitutes
         self.product_id = product_id
-        self.interfacing = Interface_diplay()
+        self.interfacing = ModelMapping()
         self.nutriscore = self.interfacing.score(self.product_id)
         for item in self.substitutes_ids:
             score = self.interfacing.score(item)
@@ -65,7 +65,7 @@ class SaveSubstituteCommand:
     def __init__(self, product_id, substitute_id):
         self.product_id = product_id
         self.substitute_id = substitute_id
-        self.interface = Interface_diplay()
+        self.interface = ModelMapping()
         self.interface.save_substitute(self.product_id, self.substitute_id)
 
 
@@ -76,7 +76,7 @@ class DisplayFavorisCommand:
     name = "goto_favoris"
 
     def __init__(self):
-        self.interface = Interface_diplay()
+        self.interface = ModelMapping()
         self.product_lst = self.interface.substituted_saved()
         # print(self.product_lst)
         self.substitute_lst = self.interface.substitute_saved()
