@@ -20,7 +20,7 @@ class ModelMapping:
             " WHERE category_product.category_id=%s"
         )
         self.inserttables.cnx.execute(query, (number, ))
-        print(self.inserttables.cnx.fetchall())
+        self.inserttables.cnx.fetchall()
 
     def display_all_categories(self):
         query = "SELECT * FROM category ORDER BY id LIMIT 50"
