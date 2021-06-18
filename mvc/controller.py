@@ -1,8 +1,8 @@
 ﻿# -*- coding: utf-8 -*-
 import os
 
-from mvc_modules.views import Home, Categories, Products, Substitutes
-from mvc_modules.views import SaveSubstitute, DisplayFavoris
+from mvc.views import Home, Categories, Products, Substitutes
+from mvc.views import SaveSubstitute, DisplayFavoris
 
 
 class Controller:

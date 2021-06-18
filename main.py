@@ -1,5 +1,5 @@
 ﻿# -*- coding: utf-8 -*-
-from mvc_modules.controller import Controller
+from mvc.controller import Controller
 
 
 class MainScript:

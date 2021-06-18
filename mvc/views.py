@@ -1,7 +1,7 @@
 ﻿# -*- coding: utf-8 -*-
-from mvc_modules.commands import HomeCommand, CategoriesCommand, QuitCommand
-from mvc_modules.commands import ProductsCommand, SubstitutesCommand
-from mvc_modules.commands import SaveSubstituteCommand, DisplayFavorisCommand
+from mvc.commands import HomeCommand, CategoriesCommand, QuitCommand
+from mvc.commands import ProductsCommand, SubstitutesCommand
+from mvc.commands import SaveSubstituteCommand, DisplayFavorisCommand
 from models.data_maping import ModelMapping
 
 
