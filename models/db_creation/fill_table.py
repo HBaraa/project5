@@ -131,7 +131,7 @@ def get_substitute(substituted_id):
 
 def save_substitute(prod_number, sub_number):
     query_update_sub_id = (
-        "INSERT INTO  favorite(substituted_id, substitute_id)" " VALUES(%s, %s)"
+        "INSERT INTO  favorite(substituted_id, substitute_id) VALUES(%s, %s)"
     )
     cnx.execute(query_update_sub_id, (prod_number, sub_number))
     connexion.commit()
