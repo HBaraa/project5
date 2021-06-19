@@ -7,10 +7,15 @@ from models.data_maping import ModelMapping
 
 class Home:
     """In this class, the user is asked to choose
-     either go to categories or exit the program"""
+    either go to categories or exit the program"""
+
     def display(self):
         print("Welcome !")
-        choice = input("1: Go to catégories  - 2: Quit ")
+        condition = True
+        while condition:
+            choice = input("1: Go to catégories  - 2: Quit ")
+            if choice in ["1", "2"]:
+                condition = False
         if choice == "1":
             return CategoriesCommand()
         else:
@@ -19,9 +24,11 @@ class Home:
 
 class Categories:
     """this class is used to display all categories and to request
-     users to choose by entering its ID
-     and it returns a call of the ProductsCommand command"""
+    users to choose by entering its ID
+    and it returns a call of the ProductsCommand command"""
+
     def __init__(self):
+        """The constructor of the class Categories."""
         self.interfacing = ModelMapping()
         self.choice = None
 
@@ -33,7 +40,11 @@ class Categories:
             # number = "première" if i == 1 else "ème"
             print(i, "  :  ")
             print(name)
-        self.choice = input("choose a category ")
+        running = True
+        while running:
+            self.choice = input("choose a category ")
+            if int(self.choice) in range(1, 51):
+                running = False
         if self.choice:
             print(self.choice)
             return ProductsCommand(self.choice)
@@ -43,24 +54,23 @@ class Categories:
 
 class Products:
     """This class is used to display all products that belong
-     to the chosen category and to ask the user to choose a product,
-     afterwards, it allows to display the details of this prosuit and it
-     returns a call to the SubstitutesCommand"""
+    to the chosen category and to ask the user to choose a product,
+    afterwards, it allows to display the details of this prosuit and it
+    returns a call to the SubstitutesCommand"""
+
     def __init__(self, products):
+        """The constructor of the class Products."""
         self.categories = Categories()
         self.category_id = self.categories.choice
         self.productcommand = ProductsCommand(self.category_id)
         self.products = products  # on attend des produits ici !
-        self.product_display = ModelMapping()
+        self.interface = ModelMapping()
         self.substitutes_id = []
         self.choice_product = None
         self.substitutes = None
 
     def display(self):
-        print(
-            "*** Here are the products that belong to ",
-            "this category  ****"
-        )
+        print("*** Here are the products that belong to ", "this category****")
         for j, product in enumerate(self.products, start=1):
             print("-" * 80)
             print("***The product ", j, "of the chosen category***")
@@ -70,20 +80,24 @@ class Products:
             print("The id =  ".center(35), id)
             print("The name =  ".center(35), name)
         print("-" * 80)
-        self.choice_product = input(
-            "**Choose a product and enter its id **   "
-            )
-        self.product_display.display_details(self.choice_product)
-        self.substitutes = self.product_display.substitute_product(
-            self.category_id
-            )
+        run_condition = True
+        while run_condition:
+            self.choice_product = input("**Choose a product and enter its id ** ")
+            if int(self.choice_product) in self.substitutes_id:
+                run_condition = False
+            else:
+                print("You have to choose one of the suggested products")
+        self.interface.display_details(self.choice_product)
+        self.substitutes = self.interface.substitute_product(self.category_id)
         return SubstitutesCommand(self.choice_product, self.substitutes_id)
 
 
 class Substitutes:
     """This class is used to display the substitute of the product and return
-     a SaveSubstituteCommand command call"""
+    a SaveSubstituteCommand command call"""
+
     def __init__(self, product, substitute):
+        """The constructor of the class Substitutes."""
         self.productdisplay = ModelMapping()
         self.product_id = product
         self.substitute_id = substitute
@@ -93,19 +107,25 @@ class Substitutes:
         print(
             "This product belongs to the same category chosen with"
             " a nutriscore better than that of the chosen product"
-            )
+        )
         print(
-            ">" * 60, "\n",
-            ">" * 50, "\n",
-            ">" * 40, "\n",
-            ">" * 30, "\n",
-            ">" * 20, "\n",
-            ">" * 10, "\n"
+            ">" * 60,
+            "\n",
+            ">" * 50,
+            "\n",
+            ">" * 40,
+            "\n",
+            ">" * 30,
+            "\n",
+            ">" * 20,
+            "\n",
+            ">" * 10,
+            "\n",
         )
         self.productdisplay.display_details(self.substitute_id)
         self.save_choice = input(
             "1: Save this substitute among your favorites  - 2: Quit "
-            )
+        )
         if self.save_choice == "1":
             return SaveSubstituteCommand(self.product_id, self.substitute_id)
         else:
@@ -114,9 +134,11 @@ class Substitutes:
 
 class SaveSubstitute:
     """In this class, the user is asked to choose between
-     see your favorites, find a substitute for another product
-     or quit the application"""
+    see your favorites, find a substitute for another product
+    or quit the application"""
+
     def __init__(self):
+        """The constructor of the class SaveSubstitute."""
         self.interfacing = ModelMapping()
 
     def display(self):
@@ -125,7 +147,7 @@ class SaveSubstitute:
             "1- See your favorites\n"
             "2- Find a substitute for another product\n"
             "3- Exit the application\n==========>>"
-            )
+        )
         if user_choice == "1":
             return DisplayFavorisCommand()
         elif user_choice == "2":
@@ -138,8 +160,10 @@ class SaveSubstitute:
 
 class DisplayFavoris:
     """This class is used to display saved favorites
-     in the favorite table"""
+    in the favorite table"""
+
     def __init__(self):
+        """The constructor of the class DisplayFavoris."""
         self.interfacing = ModelMapping()
         self.display_favor = DisplayFavorisCommand()
 
